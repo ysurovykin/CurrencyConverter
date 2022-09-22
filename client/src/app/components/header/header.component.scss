@@ -1,0 +1,25 @@
+header {
+    height: 25vh;
+    background: linear-gradient(to right, #f09819, #edde5d);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+
+    .today {
+        font-size: 35px;
+        span {
+            font-size: 30px;
+            text-decoration: underline;
+        }
+    }
+
+    .currencies-from-UAH {
+        font-size: 25px;
+        display: grid;
+        text-align: center;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 40px;
+    }
+}
