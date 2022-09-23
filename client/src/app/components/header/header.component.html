@@ -1,9 +1,6 @@
 <header *ngIf="!!currencies">
     <h2 class="today">Currency rate for UAH at <span>{{today}}</span></h2>
     <div class="currencies-from-UAH">
-        <h3>{{calculateCurrencyFromBase('uah', 'usd')}} USD</h3>
-        <h3>{{calculateCurrencyFromBase('uah', 'eur')}} EUR</h3>
-        <h3>{{calculateCurrencyFromBase('uah', 'pln')}} PLN</h3>
-        <h3>{{calculateCurrencyFromBase('uah', 'gbp')}} GBP</h3>
+        <h3 *ngFor="let currency of popularCurrencies">{{calculateCurrencyFromBase('uah', currency)}} {{currency | uppercase}}</h3>
     </div>
 </header>

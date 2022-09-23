@@ -1,5 +1,10 @@
 import { Component, Input } from "@angular/core";
 
+interface ICurrencyInfo {
+    currency: number
+    value: number
+}
+
 @Component({
     selector: 'app-body',
     templateUrl: './body.component.html',
@@ -9,31 +14,32 @@ export class Body {
 
     @Input() currencyNames: string[] = [];
     @Input() currencies: any = {};
-    firstCurrency: number = 0;
-    secondCurrency: number = 0;
+    firstCurrencyInfo: ICurrencyInfo = {
+        currency: 0,
+        value: 0
+    }
+    secondCurrencyInfo: ICurrencyInfo = {
+        currency: 0,
+        value: 0
+    }
     firstCurrencyName: string = '';
     secondCurrencyName: string = '';
-    firstCurrencyValue: number = 0;
-    secondCurrencyValue: number = 0;
 
-    changeFirstCurrency(event: any) {
-        if (this.firstCurrency === 0 && this.secondCurrency !== 0) {
-            this.firstCurrencyValue = 1;
+
+    changeCurrency(event: string, fromCurrencyInfo: ICurrencyInfo, toCurrencyInfo: ICurrencyInfo) {
+        this.checkIsFirstAttempt()
+        fromCurrencyInfo.currency = this.currencies[event]
+        fromCurrencyInfo.value = this.parseFloatCurrencyValue(toCurrencyInfo.value, toCurrencyInfo.currency, fromCurrencyInfo.currency)
+    }
+    changeCurrencyValue(event: number, fromCurrencyInfo: ICurrencyInfo, toCurrencyInfo: ICurrencyInfo) {
+        toCurrencyInfo.value = this.parseFloatCurrencyValue(event, fromCurrencyInfo.currency, toCurrencyInfo.currency)
+    }
+    parseFloatCurrencyValue(currencyValue: number, fromCurrency: number, toCurrency: number) {
+        return Number.parseFloat((currencyValue / fromCurrency * toCurrency).toFixed(4))
+    }
+    checkIsFirstAttempt() {
+        if (this.firstCurrencyInfo.currency !== 0 && this.secondCurrencyInfo.currency === 0) {
+            this.firstCurrencyInfo.value = 1;
         }
-        this.firstCurrency = this.currencies[event]
-        this.firstCurrencyValue = Number.parseFloat((this.secondCurrencyValue / this.secondCurrency * this.firstCurrency).toFixed(4))
-    }
-    changeSecondCurrency(event: any) {
-        if (this.firstCurrency !== 0 && this.secondCurrency === 0) {
-            this.firstCurrencyValue = 1;
-        }
-        this.secondCurrency = this.currencies[event]
-        this.secondCurrencyValue = Number.parseFloat((this.firstCurrencyValue / this.firstCurrency * this.secondCurrency).toFixed(4))
-    }
-    changeFirstCurrencyValue(event: number) {
-        this.secondCurrencyValue = Number.parseFloat((event * this.secondCurrency / this.firstCurrency + Number.EPSILON).toFixed(4))
-    }
-    changeSecondCurrencyValue(event: number) {
-        this.firstCurrencyValue = Number.parseFloat((event * this.firstCurrency / this.secondCurrency + Number.EPSILON).toFixed(4))
     }
 }
