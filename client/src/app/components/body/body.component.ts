@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'app-body',
     templateUrl: './body.component.html',
     styleUrls: ['./body.component.scss']
 })
-export class Body implements OnInit {
-    ngOnInit(): void {
-    }
+export class Body {
+
     @Input() currencyNames: string[] = [];
     @Input() currencies: any = {};
     firstCurrency: number = 0;
@@ -22,7 +21,6 @@ export class Body implements OnInit {
             this.firstCurrencyValue = 1;
         }
         this.firstCurrency = this.currencies[event]
-        // this.firstCurrencyValue = Math.round((this.secondCurrencyValue / this.secondCurrency * this.firstCurrency + Number.EPSILON) * 100) / 100
         this.firstCurrencyValue = Number.parseFloat((this.secondCurrencyValue / this.secondCurrency * this.firstCurrency).toFixed(4))
     }
     changeSecondCurrency(event: any) {
