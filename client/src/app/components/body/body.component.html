@@ -1,24 +1,28 @@
 <main>
     <section class="currencies">
         <h1>Currency Converter</h1>
-        <div id="currencies_first-currency" class="currencies_currency">
-            <input type="number" min="0" *ngIf="firstCurrencyInfo.currency && secondCurrencyInfo.currency" [ngModel]="firstCurrencyInfo.value"
-                (ngModelChange)="changeCurrencyValue($event, firstCurrencyInfo, secondCurrencyInfo)">
-            <select [ngModel]="firstCurrencyName"
+        <form id="currencies_first-currency" class="currencies_currency" [formGroup]="firstCurrencyInfo">
+            <input type="number" min="0" *ngIf="firstCurrencyInfo.get('currency')?.value && secondCurrencyInfo.get('currency')?.value"
+                formControlName="value"
+                (input)="changeCurrencyValue($event, firstCurrencyInfo, secondCurrencyInfo)">
+            <select formControlName="name"
                 (ngModelChange)="changeCurrency($event, firstCurrencyInfo, secondCurrencyInfo)">
                 <option value="" disabled selected>Choose Currency</option>
-                <option *ngFor="let currency of currencyNames" [ngValue]="currency">
-                    {{currency | uppercase}}</option>
+                <option *ngFor="let optCurrency of currencyNames" [ngValue]="optCurrency">
+                    {{optCurrency | uppercase}}</option>
             </select>
-        </div>
-        <div id="currencies_second-currency" class="currencies_currency">
-            <input type="number" min="0" *ngIf="firstCurrencyInfo.currency && secondCurrencyInfo.currency" [ngModel]="secondCurrencyInfo.value"
-                (ngModelChange)="changeCurrencyValue($event, secondCurrencyInfo, firstCurrencyInfo)">
-            <select [ngModel]="secondCurrencyName" (ngModelChange)="changeCurrency($event, secondCurrencyInfo, firstCurrencyInfo)">
+        </form>
+        <form id="currencies_second-currency" class="currencies_currency" [formGroup]="secondCurrencyInfo">
+            <input type="number" min="0"
+                *ngIf="firstCurrencyInfo.get('currency')?.value && secondCurrencyInfo.get('currency')?.value"
+                formControlName="value"
+                (input)="changeCurrencyValue($event, secondCurrencyInfo, firstCurrencyInfo)">
+            <select formControlName="name"
+                (ngModelChange)="changeCurrency($event, secondCurrencyInfo, firstCurrencyInfo)">
                 <option value="" disabled selected>Choose Currency</option>
-                <option *ngFor="let currency of currencyNames" [ngValue]="currency">
-                    {{currency | uppercase}}</option>
+                <option *ngFor="let optCurrency of currencyNames" [ngValue]="optCurrency">
+                    {{optCurrency | uppercase}}</option>
             </select>
-        </div>
+        </form>
     </section>
 </main>
