@@ -15,7 +15,6 @@ import { Header } from './components/header/header.component';
   ],
   imports: [
     HttpClientModule,
-    FormsModule, // delete
     ReactiveFormsModule,
     BrowserModule
   ],
